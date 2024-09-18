@@ -1,45 +1,48 @@
 # PDF RAG System
-Introduction
+### Introduction
+
 This project is part of an assignment to build a Retrieval-Augmented Generation (RAG) system that leverages NCERT textbook PDFs to answer user queries. The project involves two main tasks:
 
-Building a RAG system using NCERT PDFs and serving it through a FastAPI endpoint.
-Extending the system by introducing an agent that can decide when to query the VectorDB or perform other actions based on the user's query.
+    1. Building a RAG system using NCERT PDFs and serving it through a FastAPI endpoint.
+    2. Extending the system by introducing an agent that can decide when to query the VectorDB or perform other actions based on the user's query.
+
 The system provides a simple web-based user interface to upload PDFs, ask questions, and interact with the agent.
 
-Assignment Requirements
-Part 1: Building a RAG System
-Use NCERT PDF text as the data source.
-Chunk and index the PDF content in a VectorDB (FAISS).
-Use a FastAPI endpoint to serve the RAG system and process user queries.
-Part 2: Building an Agent
-The agent decides when to call the VectorDB based on the user's query.
-Introduce at least one more action/tool that the agent can invoke based on the query.
-Project Structure
-plaintext
-Copy code
-rag_ncert_qa_system/
-│
-├── app.py                       # Main FastAPI application file
-├── embeddings.py                # Handles embedding creation using Sentence Transformers
-├── generator.py                 # Logic for generating responses using RAG and agent logic
-├── indexer_retriever.py         # Indexing PDF text in FAISS and retrieving relevant documents
-├── pdfloader.py                 # PDF loader to extract and process text from NCERT PDFs
-├── semantics.py                 # Module to handle semantic similarity processing
-├── webpage.html                 # Simple web interface to upload PDFs and interact with the system
-├── requirements.txt             # Python dependencies
-└── README.md                    # Documentation (This file)
-Features
-PDF Processing: Upload NCERT PDFs, extract text, and chunk it for indexing.
-RAG System: Queries are processed using FAISS for retrieval and the LLM for response generation.
-Agent: Smart agent decides whether to call the VectorDB based on semantic similarity between the user's query and the document summary. If the query is irrelevant, it avoids querying the database.
-Web Interface: A frontend where users can:
-Upload PDFs.
-Ask questions.
-Interact with the agent.
-Setup Instructions
+## Assignment Requirements
+### Part 1: Building a RAG System
+    Use NCERT PDF text as the data source.
+    Chunk and index the PDF content in a VectorDB (FAISS).
+    Use a FastAPI endpoint to serve the RAG system and process user queries.
+### Part 2: Building an Agent
+    The agent decides when to call the VectorDB based on the user's query.
+    Introduce at least one more action/tool that the agent can invoke based on the query.
+### Project Structure
+
+sarvam_assignment/	
+  │
+  ├── app.py                       # Main FastAPI application file
+  ├── embeddings.py                # Handles embedding creation using Sentence Transformers
+  ├── generator.py                 # Logic for generating responses using RAG and agent logic
+  ├── indexer_retriever.py         # Indexing PDF text in FAISS and retrieving relevant documents
+  ├── pdfloader.py                 # PDF loader to extract and process text from NCERT PDFs  
+  ├── semantics.py                 # Module to handle semantic similarity processing
+  ├── webpage.html                 # Simple web interface to upload PDFs and interact with the system  
+  ├── requirements.txt             # Python dependencies
+  └── README.md                    # Documentation (This file)
+
+
+### Features
+    PDF Processing: Upload NCERT PDFs, extract text, and chunk it for indexing.
+    RAG System: Queries are processed using FAISS for retrieval and the LLM for response generation.
+    Agent: Smart agent decides whether to call the VectorDB based on semantic similarity between the user's query and the document summary. If the query is irrelevant, it avoids querying the database.
+    Web Interface: A frontend where users can:
+    Upload PDFs.
+    Ask questions.
+    Interact with the agent.
+    
+## Setup Instructions
 Prerequisites
 Ensure you have the following installed:
-
 Python 3.8+
 pip (Python package manager)
 Installation
@@ -47,19 +50,17 @@ Clone the repository:
 
 bash
 Copy code
-git clone https://github.com/your-repo/rag_ncert_qa_system.git
-cd rag_ncert_qa_system
+git clone https://github.com/your-repo/sarvam_assignment.git
+cd sarvam_assigment
 Install the required dependencies:
 
 bash
-Copy code
 pip install -r requirements.txt
 Running the Application
 Start the FastAPI server:
-
 bash
-Copy code
-uvicorn app:app --reload
+python app.py
+
 This will start the server locally at http://127.0.0.1:8000.
 
 Access the Web Interface:
