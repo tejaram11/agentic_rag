@@ -1,0 +1,12 @@
+langchain 
+transformers 
+bitsandbytes
+langchain_community 
+sentence-transformers 
+pdfplumber 
+faiss-gpu-cu12
+accelerate
+fastapi
+uvicorn
+python-multipart
+

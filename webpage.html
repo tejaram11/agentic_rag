@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RAG Application</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        h1 {
+            color: #007BFF;
+            font-size: 2em;
+            border-bottom: 2px solid #007BFF;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        .section {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        .section h2 {
+            margin-top: 0;
+            color: #0056b3;
+        }
+        input[type="file"], input[type="text"], button {
+            border-radius: 4px;
+            border: 1px solid #ddd;
+            padding: 10px;
+            font-size: 16px;
+        }
+        input[type="file"] {
+            border: 1px solid #007BFF;
+        }
+        button {
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #answer {
+            margin-top: 20px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        #api-url {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        #api-url span {
+            font-weight: bold;
+            color: #007BFF;
+        }
+        .change-api-url {
+            margin-top: 10px;
+            font-size: 14px;
+            color: #007BFF;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Assignment-1 RAG</h1>
+    
+    <div class="section">
+        <h2>API URL</h2>
+        <div id="api-url">API URL: <span id="apiUrlDisplay">http://127.0.0.1:5000</span></div>
+        <div class="change-api-url" onclick="changeApiUrl()">Change API URL</div>
+    </div>
+    
+    <div class="section">
+        <h2>Upload PDF</h2>
+        <input type="file" id="pdfFile" accept=".pdf">
+        <button onclick="uploadPDF()">Upload</button>
+    </div>
+    
+    <div class="section">
+        <h2>Ask a Question</h2>
+        <input type="text" id="question" placeholder="Enter your question here">
+        <button onclick="askQuestion()">Ask</button>
+    </div>
+    
+    <div class="section">
+        <h2>Ask Agent</h2>
+        <input type="text" id="agentQuery" placeholder="Enter your query for the agent">
+        <button onclick="askAgent()">Ask Agent</button>
+    </div>
+    
+    <div id="answer"></div>
+
+    <script>
+        let API_URL = 'http://127.0.0.1:5000'; // Default API URL
+
+        // Display API URL
+        document.getElementById('apiUrlDisplay').innerText = API_URL;
+
+        function changeApiUrl() {
+            const newUrl = prompt('Enter new API URL or click Cancel to keep the default:', API_URL);
+            if (newUrl) {
+                API_URL = newUrl;
+                document.getElementById('apiUrlDisplay').innerText = API_URL;
+            }
+        }
+
+        async function uploadPDF() {
+            const fileInput = document.getElementById('pdfFile');
+            const file = fileInput.files[0];
+            if (!file) {
+                alert('Please select a file first.');
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('file', file);
+
+            try {
+                const response = await axios.post(`${API_URL}/upload`, formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                });
+                alert(response.data.message);
+            } catch (error) {
+                console.error('Error uploading file:', error);
+                alert('Error uploading file: ' + (error.response?.data?.detail || error.message));
+            }
+        }
+
+        async function askQuestion() {
+            const questionInput = document.getElementById('question');
+            const question = questionInput.value.trim();
+            if (!question) {
+                alert('Please enter a question.');
+                return;
+            }
+
+            try {
+                const response = await axios.post(`${API_URL}/ask`, { question });
+                document.getElementById('answer').innerText = response.data.answer;
+            } catch (error) {
+                console.error('Error asking question:', error);
+                alert('Error asking question: ' + (error.response?.data?.detail || error.message));
+            }
+        }
+
+        async function askAgent() {
+            const queryInput = document.getElementById('agentQuery');
+            const query = queryInput.value.trim();
+            if (!query) {
+                alert('Please enter a query for the agent.');
+                return;
+            }
+
+            try {
+                const response = await axios.post(`${API_URL}/agent`, { query });
+                document.getElementById('answer').innerText = response.data.answer;
+            } catch (error) {
+                console.error('Error asking agent:', error);
+                alert('Error asking agent: ' + (error.response?.data?.detail || error.message));
+            }
+        }
+    </script>
+</body>
+</html>
