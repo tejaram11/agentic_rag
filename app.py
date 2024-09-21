@@ -22,6 +22,7 @@ from indexer_retriever import indexer
 from embeddings import SentenceTransformerEmbeddings
 from generator import LocalLLM
 from semantics import SemanticSimilarityProcessor
+from functions import tools, docstring
 
 
 app = FastAPI()
@@ -114,8 +115,25 @@ async def ask_agent(query: str = Body(..., embed=True)):
         res = await ask_question(question=query)
         return res
     else:
-        res = model._call(query)
+        prompt=f"""
+        you are an intelligent assistant that can decide whether we have to use provided tools or not for answering the provided query based on the similarity between query and function docstrings. 
+        if we need to use internal tool say yes else say no. 
+        say only a single word. 
+        docstrings : {docstring}
+        query: {query}
 
+        output:
+        """
+        
+        decision=model._call(prompt)
+        decision=decision[len(prompt):len(prompt)+4]
+        decision=decision.strip()
+        
+        if decision=="yes":
+            res=model.tool_call(query)
+        else:
+            res=model._call(query,tools)
+            
     return JSONResponse(content={"answer": res}, status_code=200)
 
 
