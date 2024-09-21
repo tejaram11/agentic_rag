@@ -10,6 +10,7 @@ from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
 import os
+import threading
 
 import torch
 from langchain.prompts import PromptTemplate
@@ -137,7 +138,14 @@ async def ask_agent(query: str = Body(..., embed=True)):
     return JSONResponse(content={"answer": res}, status_code=200)
 
 
+def run_app():
+    uvicorn.run(app, host="0.0.0.0", port=8000)
+
+thread = threading.Thread(target=run_app)
+thread.start()
+
+'''
 if __name__ == "__main__":
     
     uvicorn.run(app, host="0.0.0.0", port=5000)
-
+'''

@@ -64,10 +64,11 @@ class LocalLLM(LLM):
         
         if function=="get_special_today":
             temp=tools[0]()
+            return temp
         elif function == "extreme_fun_activity":
             tools[1]()
             
-        return temp
+        
         
     def _call(self, prompt: str, stop: Optional[List[str]] = None) -> str:
         # Tokenize input
