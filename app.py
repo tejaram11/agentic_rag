@@ -131,21 +131,15 @@ async def ask_agent(query: str = Body(..., embed=True)):
         decision=decision.strip()
         
         if decision=="yes":
-            res=model.tool_call(query)
+            res=model.tool_call(query,tools)
         else:
-            res=model._call(query,tools)
+            res=model._call(query)
             
     return JSONResponse(content={"answer": res}, status_code=200)
 
 
-def run_app():
-    uvicorn.run(app, host="0.0.0.0", port=8000)
 
-thread = threading.Thread(target=run_app)
-thread.start()
-
-'''
 if __name__ == "__main__":
     
     uvicorn.run(app, host="0.0.0.0", port=5000)
-'''
+
