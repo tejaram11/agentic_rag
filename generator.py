@@ -9,6 +9,7 @@ from langchain.llms.base import LLM
 from typing import Optional, List
 from pydantic import PrivateAttr, Field
 import torch
+import json
 
 from transformers import AutoTokenizer, AutoModelForCausalLM, BitsAndBytesConfig
 
@@ -41,7 +42,33 @@ class LocalLLM(LLM):
                                                         use_auth_token=access_token,
                                                         device_map='auto'
                                                         )
+    def tool_call(self, query:str,tools: List,stop:Optional[List[str]]=None)->str:
+        chat = [
+            {"role": "user", "content": query}
+            ]
+        
+        inputs = self._llm_tokenizer.apply_chat_template(
+                                                     chat,
+                                                       tools=tools,
+                                                        add_generation_prompt=True,
+                                                        return_tensors="pt"
+                                                               )
+        
+        
 
+        outputs = self._llm_model.generate(inputs, max_new_tokens=500)
+        response = self._llm_tokenizer.decode(outputs[0], skip_special_tokens=True)
+        
+        function=json.loads(response.split("assistant")[1])
+        function["arguments"] = function.pop("parameters")
+        
+        if function=="get_special_today":
+            temp=tools[0]()
+        elif function == "extreme_fun_activity":
+            tools[1]()
+            
+        return temp
+        
     def _call(self, prompt: str, stop: Optional[List[str]] = None) -> str:
         # Tokenize input
         inputs = self._llm_tokenizer.encode(prompt, return_tensors="pt").to(self._llm_model.device)
