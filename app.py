@@ -5,7 +5,7 @@ Created on Tue Sep 17 23:31:31 2024
 @author: TEJA
 """
 import argparse
-from fastapi import FastAPI, UploadFile, File, HTTPException, Body
+from fastapi import FastAPI, UploadFile, File, HTTPException, Body, Request
 from fastapi.responses import JSONResponse, StreamingResponse
 from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
@@ -146,10 +146,12 @@ class TextToSpeechRequest(BaseModel):
     textToConvert: str
 
 @app.post("/generate-audio")
-async def generate_audio(request: TextToSpeechRequest):
+async def generate_audio(request: Request):
+    print(request)
+    data = await request.json
     URL = "https://api.sarvam.ai/text-to-speech"
     key= "e0d456d9-5d0d-4e45-ae0c-92c1db82b29a"
-    text = request.text
+    text = data.text
     
     if not text:
         raise HTTPException(status_code=400, detail="No text provided for conversion.")
