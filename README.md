@@ -28,14 +28,14 @@ The system provides a simple web-based user interface to upload PDFs, ask questi
     ├── Uploads /                    # Folder for saving uploaded files
     ├── app.py                       # Main FastAPI application file
     ├── embeddings.py                # Handles embedding creation using Sentence Transformers
-    ├── functions.py                 # Tools for  Agent
-    ├── generator.py                 # Logic for generating responses using RAG and agent logic
-    ├── indexer_retriever.py         # Indexing PDF text in FAISS and retrieving relevant documents
-    ├── pdfloader.py                 # PDF loader to extract and process text from NCERT PDFs  
-    ├── semantics.py                 # Module to handle semantic similarity processing
+    ├── functions.py                 # Tools for Agent
+    ├── generator.py                 # LLM model for generating text
+    ├── indexer_retriever.py         # Indexing PDF text in FAISS DB and retrieving relevant documents
+    ├── pdfloader.py                 # PDF loader to extract and process text from uploaded PDFs  
+    ├── semantics.py                 # Module to handle semantic similarity calculation
     ├── webpage.html                 # Simple web interface to upload PDFs and interact with the system  
-    ├── requirements.txt             # Project  dependencies
-    └── README.md                    # Documentation (This file)
+    ├── requirements.txt             # Project dependencies
+    └── README.md                    
 
 
 ## Features
