@@ -62,10 +62,10 @@ class LocalLLM(LLM):
         function=json.loads(response.split("assistant")[1])
         function["arguments"] = function.pop("parameters")
         
-        if function=="get_special_today":
+        if function['name']=="get_special_today":
             temp=tools[0]()
             return temp
-        elif function == "extreme_fun_activity":
+        elif function['name'] == "extreme_fun_activity":
             tools[1]()
             
         
