@@ -78,6 +78,7 @@ class LocalLLM(LLM):
         outputs = self._llm_model.generate(inputs, max_new_tokens=100)
         response = self._llm_tokenizer.decode(outputs[0], skip_special_tokens=True)
 
+        
         return response
 
     @property
