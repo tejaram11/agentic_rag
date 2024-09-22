@@ -52,7 +52,7 @@ class LocalLLM(LLM):
                                                        tools=tools,
                                                         add_generation_prompt=True,
                                                         return_tensors="pt"
-                                                               )
+                                                               ).to(self._llm_model.device)
         
         
 
