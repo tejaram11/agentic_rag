@@ -210,10 +210,10 @@ def setup_remote_server():
 
 
 if __name__ == "__main__":
-   parser = argparse.ArgumentParser(description="Run FastAPI server")
-   parser.add_argument("--use-remote", action="store_true", help="Run server with ngrok")
+   args_parser = argparse.ArgumentParser(description="Run FastAPI server")
+   args_parser.add_argument("--use-remote", action="store_true", help="Run server with ngrok")
    
-   args = parser.parse_args()
+   args = args_parser.parse_args()
    
    if args.use_remote:
        setup_remote_server()
