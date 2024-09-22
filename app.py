@@ -105,7 +105,7 @@ async def ask_question(question: str = Body(..., embed=True)):
     )
 
     res = chain.invoke({"question": question})
-    res = res[len(prompt):]
+    #res = res[len(prompt):]
     return JSONResponse(content={"answer": res}, status_code=200)
 
 @app.post("/agent")

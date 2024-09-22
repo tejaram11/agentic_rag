@@ -190,8 +190,18 @@
             try {
                 const textToConvert = document.getElementById('answer').innerText.trim();
                 
+                if (!textToConvert) {
+                    alert('No text available to convert to audio.');
+                    return;
+                }
+                
                 // Call your backend to get the binary audio file
-                const response = await axios.post(`${API_URL}/generate-audio`, { textToConvert });
+                const response = await axios.post(`${API_URL}/generate-audio`, { textToConvert }, {
+                        responseType: 'blob',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    });
 
                 // Create a URL for the binary audio file
                 const audioUrl = URL.createObjectURL(response.data);
