@@ -4,13 +4,16 @@ Created on Tue Sep 17 23:31:31 2024
 
 @author: TEJA
 """
-
+import argparse
 from fastapi import FastAPI, UploadFile, File, HTTPException, Body
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, StreamingResponse
 from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
 import os
 import threading
+import requests
+import base64
+import io
 
 import torch
 from langchain.prompts import PromptTemplate
@@ -139,8 +142,88 @@ async def ask_agent(query: str = Body(..., embed=True)):
     return JSONResponse(content={"answer": res}, status_code=200)
 
 
+@app.post("/generate-audio")
+async def generate_audio(text):
+    URL = "https://api.sarvam.ai/text-to-speech"
+    key= "e0d456d9-5d0d-4e45-ae0c-92c1db82b29a"
+    
+    
+    if not text:
+        raise HTTPException(status_code=400, detail="No text provided for conversion.")
+
+    payload = {
+        "inputs": [text],
+        "target_language_code": "hi-IN",
+        "speaker": "meera",
+        "pitch": 0,
+        "pace": 1.65,
+        "loudness": 1.5,
+        "speech_sample_rate": 8000,
+        "enable_preprocessing": True,
+        "model": "bulbul:v1"
+    }
+
+    headers = {"Content-Type": "application/json",
+               "api-subscription-key": key }
+
+    try:
+        # Call the external Sarvam API
+        response = requests.post(URL, json=payload, headers=headers)
+
+        # Check if the response is successful
+        if response.status_code != 200:
+            raise HTTPException(status_code=response.status_code, detail=response.text)
+
+        # Extract the base64-encoded audio data from the response
+        tts_response = response.json()
+
+        # Assuming the API response has 'audios' field with base64-encoded WAV data
+        if "audios" not in tts_response or not tts_response["audios"]:
+            raise HTTPException(status_code=500, detail="No audio data received from TTS API.")
+
+        audio_base64 = tts_response["audios"][0]
+
+        # Decode the base64 audio data
+        audio_bytes = base64.b64decode(audio_base64)
+        
+        audio_file_path = "output_audio.wav"
+        with open(audio_file_path, "wb") as audio_file:
+            audio_file.write(audio_bytes)
+
+        # Prepare a streaming response to send back the audio as a binary stream
+        audio_stream = io.BytesIO(audio_bytes)
+        return StreamingResponse(audio_stream, media_type="audio/wav")
+
+    except requests.RequestException as e:
+        raise HTTPException(status_code=500, detail=f"Error in TTS API call: {str(e)}")
+
+
+
+
 
 if __name__ == "__main__":
-    
-    uvicorn.run(app, host="0.0.0.0", port=5000)
+    parser = argparse.ArgumentParser(description="Run FastAPI server locally or via remote (ngrok).")
+    parser.add_argument("--remote", action="store_true", help="Use this flag to run the server via ngrok (remote).")
+
+    args = parser.parse_args()
+    if args.remote:
+        import nest_asyncio
+        from pyngrok import ngrok
+
+        # Get your authtoken from https://dashboard.ngrok.com/get-started/your-authtoken
+        auth_token = "2mD79q8xYOrgmoWpQiq6jBY6az4_5Tx5ic5BTZEyqqrgK4ts3"
+        ngrok.set_auth_token(auth_token)
+
+        # Connect to ngrok
+        ngrok_tunnel = ngrok.connect(8000)
+        print('Public URL:', ngrok_tunnel.public_url)
+
+        # Apply nest_asyncio
+        nest_asyncio.apply()
+
+        # Run the uvicorn server via ngrok
+        uvicorn.run(app, port=8000)
+    else:
+        # Run locally
+        uvicorn.run(app, host="0.0.0.0", port=5000)
 

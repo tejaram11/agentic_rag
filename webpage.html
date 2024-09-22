@@ -104,9 +104,15 @@
         <h2>Ask Agent</h2>
         <input type="text" id="agentQuery" placeholder="Enter your query for the agent">
         <button onclick="askAgent()">Ask Agent</button>
+        <button onclick="generateAudio()">Generate Audio</button>
+        
     </div>
+    <audio id="audioPlayer" controls></audio>
     
     <div id="answer"></div>
+
+    <!-- Audio Element for playing the TTS response -->
+    
 
     <script>
         let API_URL = 'http://127.0.0.1:5000'; // Default API URL
@@ -177,6 +183,29 @@
             } catch (error) {
                 console.error('Error asking agent:', error);
                 alert('Error asking agent: ' + (error.response?.data?.detail || error.message));
+            }
+        }
+        
+        async function generateAudio() {
+            try {
+                const textToConvert = document.getElementById('answer').innerText.trim();
+                
+                // Call your backend to get the binary audio file
+                const response = await axios.post(`${API_URL}/generate-audio`, { textToConvert }, {
+                    responseType: 'blob'  // Ensure that we get the binary data as a Blob
+                });
+
+                // Create a URL for the binary audio file
+                const audioUrl = URL.createObjectURL(response.data);
+
+                // Set the audio player source to the audio URL and play it
+                const audioPlayer = document.getElementById('audioPlayer');
+                audioPlayer.src = audioUrl;
+                audioPlayer.play();
+
+            } catch (error) {
+                console.error('Error generating audio:', error);
+                alert('Error generating audio: ' + (error.response?.data?.detail || error.message));
             }
         }
     </script>
