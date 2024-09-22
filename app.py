@@ -201,7 +201,7 @@ def setup_remote_server():
     import nest_asyncio
     from pyngrok import ngrok
 
-    auth_token = "your-ngrok-auth-token"
+    auth_token = "2mD79q8xYOrgmoWpQiq6jBY6az4_5Tx5ic5BTZEyqqrgK4ts3"
     ngrok.set_auth_token(auth_token)
     ngrok_tunnel = ngrok.connect(8000)
     print('Public URL:', ngrok_tunnel.public_url)
