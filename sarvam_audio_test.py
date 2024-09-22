@@ -18,7 +18,7 @@ def generate_audio(text):
         "target_language_code": "hi-IN",
         "speaker": "meera",
         "pitch": 0,
-        "pace": 1.65,
+        "pace": 1,
         "loudness": 1.5,
         "speech_sample_rate": 8000,
         "enable_preprocessing": True,
