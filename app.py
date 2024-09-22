@@ -14,6 +14,7 @@ import threading
 import requests
 import base64
 import io
+from pydantic import BaseModel
 
 import torch
 from langchain.prompts import PromptTemplate
@@ -141,12 +142,14 @@ async def ask_agent(query: str = Body(..., embed=True)):
             
     return JSONResponse(content={"answer": res}, status_code=200)
 
+class TextToSpeechRequest(BaseModel):
+    textToConvert: str
 
 @app.post("/generate-audio")
-async def generate_audio(text:str =Body(...,embed=True)):
+async def generate_audio(request: TextToSpeechRequest):
     URL = "https://api.sarvam.ai/text-to-speech"
     key= "e0d456d9-5d0d-4e45-ae0c-92c1db82b29a"
-    
+    text = request.text
     
     if not text:
         raise HTTPException(status_code=400, detail="No text provided for conversion.")
