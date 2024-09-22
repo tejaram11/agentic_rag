@@ -153,7 +153,7 @@ async def generate_audio(text):
 
     payload = {
         "inputs": [text],
-        "target_language_code": "hi-IN",
+        "target_language_code": "te-IN",
         "speaker": "meera",
         "pitch": 0,
         "pace": 1.65,
