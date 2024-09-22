@@ -197,33 +197,27 @@ async def generate_audio(text):
     except requests.RequestException as e:
         raise HTTPException(status_code=500, detail=f"Error in TTS API call: {str(e)}")
 
+def setup_remote_server():
+    import nest_asyncio
+    from pyngrok import ngrok
 
+    auth_token = "your-ngrok-auth-token"
+    ngrok.set_auth_token(auth_token)
+    ngrok_tunnel = ngrok.connect(8000)
+    print('Public URL:', ngrok_tunnel.public_url)
+    nest_asyncio.apply()
 
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Run FastAPI server locally or via remote (ngrok).")
-    parser.add_argument("--remote", action="store_true", help="Use this flag to run the server via ngrok (remote).")
-
-    args = parser.parse_args()
-    if args.remote:
-        import nest_asyncio
-        from pyngrok import ngrok
-
-        # Get your authtoken from https://dashboard.ngrok.com/get-started/your-authtoken
-        auth_token = "2mD79q8xYOrgmoWpQiq6jBY6az4_5Tx5ic5BTZEyqqrgK4ts3"
-        ngrok.set_auth_token(auth_token)
-
-        # Connect to ngrok
-        ngrok_tunnel = ngrok.connect(8000)
-        print('Public URL:', ngrok_tunnel.public_url)
-
-        # Apply nest_asyncio
-        nest_asyncio.apply()
-
-        # Run the uvicorn server via ngrok
-        uvicorn.run(app, port=8000)
-    else:
-        # Run locally
-        uvicorn.run(app, host="0.0.0.0", port=5000)
+   parser = argparse.ArgumentParser(description="Run FastAPI server")
+   parser.add_argument("--use-remote", action="store_true", help="Run server with ngrok")
+   
+   args = parser.parse_args()
+   
+   if args.use_remote:
+       setup_remote_server()
+       uvicorn.run(app, host="0.0.0.0", port=8000)
+   else:
+       uvicorn.run(app, host="0.0.0.0", port=5000)
 
