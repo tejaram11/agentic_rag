@@ -1,0 +1,58 @@
+/usr/local/lib/python3.10/dist-packages/sentence_transformers/cross_encoder/CrossEncoder.py:13: TqdmExperimentalWarning: Using `tqdm.autonotebook.tqdm` in notebook mode. Use `tqdm.tqdm` instead to force console mode (e.g. in jupyter console)
+  from tqdm.autonotebook import tqdm, trange
+/usr/local/lib/python3.10/dist-packages/transformers/models/auto/auto_factory.py:469: FutureWarning: The `use_auth_token` argument is deprecated and will be removed in v5 of Transformers. Please use `token` instead.
+  warnings.warn(
+Loading checkpoint shards: 100%
+ 4/4 [01:16<00:00, 16.45s/it]
+/usr/local/lib/python3.10/dist-packages/transformers/models/auto/tokenization_auto.py:786: FutureWarning: The `use_auth_token` argument is deprecated and will be removed in v5 of Transformers. Please use `token` instead.
+  warnings.warn(
+/usr/local/lib/python3.10/dist-packages/huggingface_hub/utils/_token.py:89: UserWarning: 
+The secret `HF_TOKEN` does not exist in your Colab secrets.
+To authenticate with the Hugging Face Hub, create a token in your settings tab (https://huggingface.co/settings/tokens), set it as secret in your Google Colab and restart your session.
+You will be able to reuse this secret in all of your notebooks.
+Please note that authentication is recommended but still optional to access public models or datasets.
+  warnings.warn(
+/usr/local/lib/python3.10/dist-packages/transformers/tokenization_utils_base.py:1601: FutureWarning: `clean_up_tokenization_spaces` was not set. It will be set to `True` by default. This behavior will be depracted in transformers v4.45, and will be then set to `False` by default. For more details check this issue: https://github.com/huggingface/transformers/issues/31884
+  warnings.warn(
+INFO:     Started server process [6265]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+Public URL: https://8681-34-143-241-56.ngrok-free.app
+INFO:     2406:b400:d1:4bc6:bd45:9b18:51ac:efa6:0 - "POST /upload HTTP/1.1" 200 OK
+INFO:     2406:b400:d1:4bc6:bd45:9b18:51ac:efa6:0 - "OPTIONS /agent HTTP/1.1" 200 OK
+The attention mask and the pad token id were not set. As a consequence, you may observe unexpected behavior. Please pass your input's `attention_mask` to obtain reliable results.
+Setting `pad_token_id` to `eos_token_id`:128001 for open-end generation.
+The attention mask is not set and cannot be inferred from input because pad token is same as eos token. As a consequence, you may observe unexpected behavior. Please pass your input's `attention_mask` to obtain reliable results.
+The attention mask and the pad token id were not set. As a consequence, you may observe unexpected behavior. Please pass your input's `attention_mask` to obtain reliable results.
+Setting `pad_token_id` to `eos_token_id`:128001 for open-end generation.
+INFO:     2406:b400:d1:4bc6:bd45:9b18:51ac:efa6:0 - "POST /agent HTTP/1.1" 200 OK
+INFO:     2406:b400:d1:4bc6:bd45:9b18:51ac:efa6:0 - "OPTIONS /generate-audio HTTP/1.1" 200 OK
+<starlette.requests.Request object at 0x7b0608594550>
+{'text': "Yesterday's date:21-9-2024. No special events for Yesterday. No data\nToday's date:22-9-2024. Today's special events: September Equinox\nTomorrow's date:23-9-2024. No special events for Tomorrow. No data"}
+INFO:     2406:b400:d1:4bc6:bd45:9b18:51ac:efa6:0 - "POST /generate-audio HTTP/1.1" 200 OK
+INFO:     2406:b400:d1:4bc6:bd45:9b18:51ac:efa6:0 - "POST /upload HTTP/1.1" 200 OK
+INFO:     2406:b400:d1:4bc6:bd45:9b18:51ac:efa6:0 - "OPTIONS /ask HTTP/1.1" 200 OK
+The attention mask and the pad token id were not set. As a consequence, you may observe unexpected behavior. Please pass your input's `attention_mask` to obtain reliable results.
+Setting `pad_token_id` to `eos_token_id`:128001 for open-end generation.
+INFO:     2406:b400:d1:4bc6:bd45:9b18:51ac:efa6:0 - "POST /ask HTTP/1.1" 200 OK
+INFO:     2406:b400:d1:4bc6:bd45:9b18:51ac:efa6:0 - "OPTIONS /agent HTTP/1.1" 200 OK
+The attention mask and the pad token id were not set. As a consequence, you may observe unexpected behavior. Please pass your input's `attention_mask` to obtain reliable results.
+Setting `pad_token_id` to `eos_token_id`:128001 for open-end generation.
+The attention mask and the pad token id were not set. As a consequence, you may observe unexpected behavior. Please pass your input's `attention_mask` to obtain reliable results.
+Setting `pad_token_id` to `eos_token_id`:128001 for open-end generation.
+INFO:     2406:b400:d1:4bc6:bd45:9b18:51ac:efa6:0 - "POST /agent HTTP/1.1" 200 OK
+INFO:     2406:b400:d1:4bc6:bd45:9b18:51ac:efa6:0 - "OPTIONS /agent HTTP/1.1" 200 OK
+The attention mask and the pad token id were not set. As a consequence, you may observe unexpected behavior. Please pass your input's `attention_mask` to obtain reliable results.
+Setting `pad_token_id` to `eos_token_id`:128001 for open-end generation.
+The attention mask and the pad token id were not set. As a consequence, you may observe unexpected behavior. Please pass your input's `attention_mask` to obtain reliable results.
+Setting `pad_token_id` to `eos_token_id`:128001 for open-end generation.
+INFO:     2406:b400:d1:4bc6:bd45:9b18:51ac:efa6:0 - "POST /agent HTTP/1.1" 200 OK
+INFO:     2406:b400:d1:4bc6:bd45:9b18:51ac:efa6:0 - "OPTIONS /generate-audio HTTP/1.1" 200 OK
+<starlette.requests.Request object at 0x7b0608549b40>
+{'text': "Yesterday's date:21-9-2024. No special events for Yesterday. No data\nToday's date:22-9-2024. Today's special events: September Equinox\nTomorrow's date:23-9-2024. No special events for Tomorrow. No data"}
+INFO:     2406:b400:d1:4bc6:bd45:9b18:51ac:efa6:0 - "POST /generate-audio HTTP/1.1" 200 OK
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [6265]
