@@ -9,4 +9,5 @@ accelerate
 fastapi
 uvicorn
 python-multipart
+pyngrok
 
