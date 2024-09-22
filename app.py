@@ -143,7 +143,7 @@ async def ask_agent(query: str = Body(..., embed=True)):
 
 
 @app.post("/generate-audio")
-async def generate_audio(text):
+async def generate_audio(text:str =Body(...,embed=True)):
     URL = "https://api.sarvam.ai/text-to-speech"
     key= "e0d456d9-5d0d-4e45-ae0c-92c1db82b29a"
     

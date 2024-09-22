@@ -6,7 +6,7 @@ Created on Tue Sep 17 23:33:26 2024
 """
 
 from langchain_text_splitters import RecursiveCharacterTextSplitter
-from langchain.vectorstores import FAISS
+from langchain_community.vectorstores import FAISS
 
 class indexer():
     def __init__(self,chunk_size=200,overlap=10):
