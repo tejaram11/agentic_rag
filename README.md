@@ -22,7 +22,7 @@ The system provides a simple web-based user interface to upload PDFs, ask questi
 ## Project Structure
 
 
-    sarvam_assignment/	
+    agentic_rag/	
     │
     ├── Outputs /                    # Folder for images 
     ├── Uploads /                    # Folder for saving uploaded files
@@ -58,8 +58,8 @@ Assignment - 2 & 3:
 
 Clone the repository:
     
-    git clone https://github.com/your-repo/sarvam_assignment.git
-    cd sarvam_assigment
+    git clone https://github.com/tejaram11/agentic_rag.git
+    cd agentic_rag
 
 Install the required dependencies:
 
